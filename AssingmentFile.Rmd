@@ -1,0 +1,51 @@
+---
+title: "Assingment: Rmarkdown & Leaflet"
+subtitle: "Data Science: Developing Data Products"
+author: "Yellow Duck"
+date: "September 4, 2019"
+output: html_document
+---
+******
+
+## Intructions 
+
+Create a web page using **R Markdown** that features a map created with **Leaflet**. Host your webpage on either GitHub Pages, **RPubs**, or NeoCities.  
+Your webpage must contain:  
+
+* date that you created the document, and 
+* map created with Leaflet.  
+
+## Submission  
+
+If it's Friday then we are in Ireland!
+
+
+```{r one, eval = TRUE, echo = FALSE}
+library(leaflet)
+```
+
+Where we will vist seven oldest pubs in the country ... at least based on [The Oldest Pubs in Ireland](https://tbexcon.com/blog/oldest-pubs-in-ireland/)! 
+
+
+```{r two, eval = TRUE, echo = FALSE}
+pubByYear = data.frame(
+  long  = c(-6.216,-5.923, -8.735, -5.537, -7.253, -6.276, -7.942), 
+  lat   = c(53.223, 54.601, 51.746, 54.38, 52.653, 53.344, 53.422), 
+  year  = c(1798, 1711, 1698, 1611, 1263, 1198, 900), 
+  name  = c("Johnny Fox’s Pub, Glencullen, Dublin", "McHugh’s Bar, Belfast", "Gateway Bar, Cork City", "Grace Neill’s, Donaghadee, Down", "Kyteler’s Inn, Kilkenny", "Brazen Head, Dublin", "Sean’s Bar, Athlone" ))
+
+leaflet(data = pubByYear) %>% addTiles() %>%
+  addMarkers(~long, ~lat, popup = ~as.character(year), label = ~as.character(name),  clusterOptions = markerClusterOptions())
+```
+
+
+Let's start with Johnny Fox's Pub located 23.9km drive from Dublin Airport.  
+
+```{r three, eval = TRUE, echo = FALSE}
+leaflet() %>%
+  addTiles %>%
+  setView(lng = -6.26, lat = 53.35, zoom = 10) %>%
+  addMarkers(lng = -6.216, lat = 53.223, popup = "Johnny Fox’s Pub") %>% 
+  addMarkers(lng = -6.3, lat = 53.43, popup = "Dublin Airport")
+```
+
